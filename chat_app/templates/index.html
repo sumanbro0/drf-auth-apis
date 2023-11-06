@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Simple Chat App</title>
+</head>
+
+<style>
+    /* Add your basic styling here */
+    .chat-container {
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    .chat-window {
+        height: 300px;
+        overflow-y: scroll;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    input,
+    button {
+        display: block;
+        margin-bottom: 10px;
+    }
+</style>
+
+<body>
+    <div class="chat-container">
+        <div class="chat-window" id="chat-window"></div>
+        <input type="text" id="messageInput" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <script>
+        const chatSocket = new WebSocket('ws://localhost:8000/ws/chat/');
+        chatSocket.onopen = function (event) {
+            console.log('WebSocket connection opened:', event);
+        };
+
+        chatSocket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            const chatWindow = document.getElementById('chat-window');
+            chatWindow.innerHTML += '<div>' + data.message + '</div>';
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        };
+
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            chatSocket.send(JSON.stringify({
+                'message': messageInput.value,
+                'hello': "hello"
+            }));
+            messageInput.value = '';
+        }
+    </script>
+</body>
+
+</html>
