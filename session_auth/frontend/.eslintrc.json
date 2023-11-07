@@ -6,7 +6,7 @@
 
 // if faced next/babel error
 // {
-//  "extends": "@sanity/eslint-config-studio",
+//  "extends": "next/core-web-vitals"
 //  "eslint.workingDirectories": ["./web", "./studio"]
 // }
 
