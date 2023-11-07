@@ -5,8 +5,13 @@
 // }
 
 // if faced next/babel error
+// {
+//  "extends": "@sanity/eslint-config-studio",
+//  "eslint.workingDirectories": ["./web", "./studio"]
+// }
+
+// still facing the error ?.
 {
-  "extends": "@sanity/eslint-config-studio",
-  "eslint.workingDirectories": ["./web", "./studio"]
+  "extends": ["next/babel", "next/core-web-vitals"]
 }
 
